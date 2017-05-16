@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinguang.iot.dao.mapper.SysCompanyMapper">
+  <resultMap id="BaseResultMap" type="com.xinguang.iot.dao.entity.SysCompany">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="api_key" jdbcType="VARCHAR" property="apiKey" />
+    <result column="company_login" jdbcType="VARCHAR" property="companyLogin" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <select id="checkValid" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT * from sys_company where company_login = #{param1} AND api_key=#{param2};
+  </select>
+</mapper>

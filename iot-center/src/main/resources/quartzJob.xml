@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+    <!-- 定时任务 触发器注册 -->
+    <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="overDueTrigger" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="overDueBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.xinguang.riskcontrolcenter.manager.quartzJob.OverDue"></property>
+        <property name="durability" value="true"></property>
+    </bean>
+
+	<!-- 逾期状态修改 Trigger-->
+	<bean id="overDueTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<!-- 任务的详细信息 -->
+		<property name="jobDetail">
+			<ref bean="overDueBean" />
+		</property>
+        <property name="cronExpression">
+            <!-- 每天凌晨2点 -->
+            <value>0 0 2 * * ?</value>
+            <!--<value>0/10 * * * * ?</value>-->
+        </property>
+	</bean>
+    
+    
+    
+    
+	<!-- 附表： 
+	时间大小由小到大排列，从秒开始，顺序为 秒，分，时，日，月，年    *为任意 ？为无限制。 
+	"0/10 * * * * ?" 每10秒触发 
+	"0 0 12 * * ?" 每天中午12点触发 
+	"0 15 10 ? * *" 每天上午10:15触发 
+	"0 15 10 * * ?" 每天上午10:15触发 
+	"0 15 10 * * ? *" 每天上午10:15触发 
+	"0 15 10 * * ? 2005" 2005年的每天上午10:15触发 
+	"0 * 14 * * ?" 在每天下午2点到下午2:59期间的每1分钟触发 
+	"0 0/5 14 * * ?" 在每天下午2点到下午2:55期间的每5分钟触发 
+	"0 0/5 14,18 * * ?" 在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发 
+	"0 0-5 14 * * ?" 在每天下午2点到下午2:05期间的每1分钟触发 
+	"0 10,44 14 ? 3 WED" 每年三月的星期三的下午2:10和2:44触发 
+	"0 15 10 ? * MON-FRI" 周一至周五的上午10:15触发 
+	"0 15 10 15 * ?" 每月15日上午10:15触发 
+	"0 15 10 L * ?" 每月最后一日的上午10:15触发 
+	"0 15 10 ? * 6L" 每月的最后一个星期五上午10:15触发 
+	"0 15 10 ? * 6L 2002-2005" 2002年至2005年的每月的最后一个星期五上午10:15触发 
+	"0 15 10 ? * 6#3" 每月的第三个星期五上午10:15触发 -->
+	
+	<!-- 
+	每隔多长时间执行一次
+	<bean id="simplerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	固定时间点执行一次
+	<bean id="update_redis_trigger" class="org.springframework.scheduling.quartz.CronTriggerBean"> -->
+
+</beans>  
